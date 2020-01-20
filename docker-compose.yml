@@ -1,0 +1,37 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysql
+      #MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      #MYSQL_DATABASE: ${MYSQL_DATABASE}
+      #MYSQL_USER: ${MYSQL_USER}
+      #MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+  app:
+    build: .
+    restart: always
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3001 -b 0.0.0.0"
+    volumes:
+      - .:/myapp:cached
+      - bundle:/myapp/bundle
+      - rails_cache:/myapp/tmp/cache
+      #- node_modules:/myapp/node_modules
+      #- packs:/myapp/public/packs
+    ports:
+      - "3001:3001"
+    links:
+      - db
+    depends_on:
+      - db
+    environment:
+      - RAILS_ENV=${RAILS_ENV:-development}
+      - DB_HOST=db      
+    tmpfs:
+      - /tmp      
+volumes:
+  bundle:
+  rails_cache:
