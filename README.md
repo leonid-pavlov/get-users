@@ -1,24 +1,8 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Rails demo project, details in task.md
 
-Things you may want to cover:
+Steps to run tests inside docker container:
+1. docker-compose build
+2. RAILS_ENV=test docker-compose run app rake test
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
